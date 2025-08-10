@@ -60,7 +60,7 @@
               "RelativeDocumentMoniker": "ppu.cpp",
               "ToolTip": "D:\\Tutorial\\Learn-Chip-8\\ppu.cpp",
               "RelativeToolTip": "ppu.cpp",
-              "ViewState": "AgIAAHIAAAAAAAAAAADwv4QAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAEwAAAAAAAAAAAD4v2AAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-08-10T02:54:25.616Z",
               "EditorCaption": ""
@@ -75,8 +75,7 @@
               "RelativeToolTip": "emu.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-08-10T02:54:23.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:54:23.102Z"
             },
             {
               "$type": "Document",
@@ -88,8 +87,7 @@
               "RelativeToolTip": "emumem.h",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-10T02:54:05.093Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:54:05.093Z"
             },
             {
               "$type": "Document",
@@ -101,8 +99,7 @@
               "RelativeToolTip": "emu.h",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-10T02:54:04.427Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:54:04.427Z"
             },
             {
               "$type": "Document",
@@ -114,8 +111,7 @@
               "RelativeToolTip": "cpu.h",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-10T02:53:59.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:53:59.14Z"
             },
             {
               "$type": "Document",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "common.h",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-10T02:53:57.965Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:53:57.965Z"
             },
             {
               "$type": "Document",
@@ -140,8 +135,7 @@
               "RelativeToolTip": "cart.h",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-10T02:53:55.675Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:53:55.675Z"
             },
             {
               "$type": "Document",
@@ -153,8 +147,7 @@
               "RelativeToolTip": "bus.h",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-10T02:53:51.065Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:53:51.065Z"
             },
             {
               "$type": "Document",
@@ -166,8 +159,7 @@
               "RelativeToolTip": "bus.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-08-10T02:53:45.587Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:53:45.587Z"
             },
             {
               "$type": "Document",
@@ -179,8 +171,7 @@
               "RelativeToolTip": "cpu.cpp",
               "ViewState": "AgIAAJkAAAAAAAAAAAAAADoBAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-08-10T02:44:50.742Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T02:44:50.742Z"
             }
           ]
         }
