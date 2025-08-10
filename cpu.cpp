@@ -313,7 +313,18 @@ bool cpu_step() {
         case 0x33: 
             /*FX33 - BCD（"Binary-Coded Decimal）转换 
             数字格式转换工具 将一个8位二进制数转换为3个BCD数字并存储到内存中 
-            让CHIP-8能够显示十进制数字*/
+            让CHIP-8能够显示十进制数字
+            BCD (Binary-Coded Decimal) Conversion
+                 Digital format conversion tool that converts an 8-bit binary number into 3 BCD digits and stores them in memory, 
+                 allowing CHIP-8 to display decimal numbers.
+            Detailed explanation:
+                BCD (Binary-Coded Decimal) is a method of representing decimal numbers using binary code, 
+                where each decimal digit is encoded using 4 bits.
+                Digital format conversion tool - A utility that transforms data from one format to another.
+                Converts an 8-bit binary number into 3 BCD digits - Takes a single 8-bit value and splits it into three separate decimal digits (hundreds, tens, ones).
+                Stores them in memory - Saves the converted digits at consecutive memory locations.
+                Allowing CHIP-8 to display decimal numbers - Enables the CHIP-8 system to show human-readable decimal values on screen.
+            */
             mem_write(ctx.reg.I, ctx.reg.V[X] / 100);
             mem_write(ctx.reg.I + 1, (ctx.reg.V[X] / 10) % 10);
             mem_write(ctx.reg.I + 2, ctx.reg.V[X] % 10);
