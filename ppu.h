@@ -9,7 +9,7 @@
 #define PPU_SCREEN_WIDTH 64
 #define PPU_SCREEN_HIGHT 32
 #define PPU_SCREEN_SIZE 64*32
-
+#define FONT_ADDRESS 0x50
 
 typedef struct {
     bool display_pixel[PPU_SCREEN_SIZE];
@@ -26,5 +26,6 @@ ppu_context* ppu_get_ctx();
 void ppu_init();
 void ppu_tick();
 void ppu_screen_clean();
+void ppu_screen_clear();
 void ppu_set_pixel(u16 address);
 void ppu_screen_update();

@@ -157,6 +157,7 @@ ucrt.lib;SDL2.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies
     <ClCompile Include="emumem.cpp" />
     <ClCompile Include="emu.cpp" />
     <ClCompile Include="ppu.cpp" />
+    <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bus.h" />

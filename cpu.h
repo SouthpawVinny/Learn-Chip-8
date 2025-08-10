@@ -19,6 +19,12 @@ typedef struct {
     bool is_draw;
 } cpu_context;
 
+// key check
+bool is_key_pressed(u8 key);
+u8 wait_for_key();
+void handle_input();
+
 cpu_context* cpu_get_ctx();
 void cpu_init();
 bool cpu_step();
+void handle_input();

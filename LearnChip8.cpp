@@ -3,6 +3,7 @@
 #include  "cart.h"
 #include  "ppu.h"
 #include  "cpu.h"
+#include  "timer.h"
 #include  "SDL.h"
 #include  "SDL_ttf.h"
 
@@ -53,13 +54,26 @@ int emu_run(int argc, char** argv) {
 
     cpu_init();
 
+    // frame control
+    const int TARGET_FPS = 60;
+    const int FRAME_DELAY = 1000 / TARGET_FPS;
+    Uint32 frameStart;
+    int frameTime;
+
+    // timer
+    Uint32 lastTimerUpdate = SDL_GetTicks();
+    const int TIMER_FREQUENCY = 60; // 60Hz timer
+
     while (ctx.running) {
+
+        frameStart = SDL_GetTicks();
+
+        handle_input();
+
         if (ctx.paused) {
             delay(10);
             continue;
         }
-
-        // get time
 
         if (!cpu_step()) {
             printf("CPU Stopped\n");
@@ -67,15 +81,28 @@ int emu_run(int argc, char** argv) {
         }
 
         //get time
-
-        //delay
+        Uint32 currentTime = SDL_GetTicks();
+        if (currentTime - lastTimerUpdate >= 1000 / TIMER_FREQUENCY) {
+            timer_tick();
+            lastTimerUpdate = currentTime;
+        }
 
         //draw
-
         if (cpu_get_ctx()->is_draw) {
             ppu_screen_update();
+            cpu_get_ctx()->is_draw = false; // redraw
+        }
+
+        //delay
+        frameTime = SDL_GetTicks() - frameStart;
+        if (frameTime < FRAME_DELAY) {
+            SDL_Delay(FRAME_DELAY - frameTime);
         }
     }
+
+    // quit clean
+    SDL_Quit();
+    TTF_Quit();
 
     return 0;
 

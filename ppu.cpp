@@ -5,7 +5,6 @@
 #include  "SDL.h"
 static ppu_context ctx = { 0 };
 
-#define FONT_ADDRESS 0x50
 
 static u8 font[] = {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -37,7 +36,7 @@ void ppu_init() {
     ctx.bg_color = 0x000000FF;
     ctx.scale = 10;
 
-    // SDL ͼȾ裺
+    // SDL render  loop
     // 
     // 1.SDL init
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -81,6 +80,17 @@ void ppu_init() {
 void ppu_tick() {
 
 }
+//screen refresh
+void ppu_screen_clear() {
+    // handle clear screen
+    u32 r = (ctx.bg_color >> 24) & 0xFF;
+    u32 g = (ctx.bg_color >> 16) & 0xFF;
+    u32 b = (ctx.bg_color >> 8) & 0xFF;
+    u32 a = (ctx.bg_color >> 0) & 0xFF;
+    
+    SDL_SetRenderDrawColor(ctx.sdl_renderer, r, g, b, a);
+    SDL_RenderClear(ctx.sdl_renderer);
+}
 
 void ppu_screen_clean() {
     memset(ctx.display_pixel, false, sizeof ctx.display_pixel);
@@ -92,6 +102,9 @@ void ppu_set_pixel(u16 address) {
 
 // update screen
 void ppu_screen_update() {
+    // clear first
+    ppu_screen_clear();
+    
     SDL_Rect rect = {
         rect.x = 0,
         rect.y = 0,
@@ -109,12 +122,11 @@ void ppu_screen_update() {
 
     SDL_SetRenderDrawColor(ctx.sdl_renderer, r, g, b, a);
 
-
-    //fetch pixel
+    // fetch pixel
     for (u16 pixel_i = 0; pixel_i < PPU_SCREEN_SIZE; pixel_i++) {
         if (ctx.display_pixel[pixel_i]) {
-            x = pixel_i % PPU_SCREEN_WIDTH;  // 列号 (x坐标)
-            y = pixel_i / PPU_SCREEN_WIDTH;  // 行号 (y坐标)
+            x = pixel_i % PPU_SCREEN_WIDTH;
+            y = pixel_i / PPU_SCREEN_WIDTH;
             x *= ctx.scale;
             y *= ctx.scale;
             rect.x = x;

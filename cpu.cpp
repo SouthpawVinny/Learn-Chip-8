@@ -1,9 +1,75 @@
 #include "cpu.h"
 #include "ppu.h"
+#include "emu.h"
+#include "timer.h"
 #include "string.h"
 #include  "emumem.h"
 
 static cpu_context ctx = { 0 };
+
+// keyboard map
+static u8 chip8_keys[16] = {
+    SDLK_x, SDLK_1, SDLK_2, SDLK_3,  // 0,1,2,3
+    SDLK_q, SDLK_w, SDLK_e, SDLK_a,  // 4,5,6,7
+    SDLK_s, SDLK_d, SDLK_z, SDLK_c,  // 8,9,A,B
+    SDLK_4, SDLK_r, SDLK_f, SDLK_v   // C,D,E,F
+};
+
+static bool key_pressed[16] = { false };
+
+// check key
+bool is_key_pressed(u8 key) {
+    if (key < 16) {
+        return key_pressed[key];
+    }
+    return false;
+}
+
+// wait for input
+u8 wait_for_key() {
+    extern emu_context* emu_get_context();
+    emu_context* emu_ctx = emu_get_context();
+    
+    while (emu_ctx->running) {
+        handle_input();
+        for (int i = 0; i < 16; i++) {
+            if (key_pressed[i]) {
+                return i;
+            }
+        }
+        SDL_Delay(10);
+    }
+    return 0;
+}
+
+// handle input
+void handle_input() {
+    extern emu_context* emu_get_context();
+    emu_context* emu_ctx = emu_get_context();
+    
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+        case SDL_QUIT:
+            emu_ctx->running = false;
+            break;
+        case SDL_KEYDOWN:
+            for (int i = 0; i < 16; i++) {
+                if (event.key.keysym.sym == chip8_keys[i]) {
+                    key_pressed[i] = true;
+                }
+            }
+            break;
+        case SDL_KEYUP:
+            for (int i = 0; i < 16; i++) {
+                if (event.key.keysym.sym == chip8_keys[i]) {
+                    key_pressed[i] = false;
+                }
+            }
+            break;
+        }
+    }
+}
 
 cpu_context* cpu_get_ctx() {
     return &ctx;
@@ -194,6 +260,16 @@ bool cpu_step() {
         EX9E	KeyOp	if (key() == Vx)	Skips the next instruction if the key stored in VX is pressed (usually the next instruction is a jump to skip a code block).[13]
         EXA1	KeyOp	if (key() != Vx)	Skips the next instruction if the key stored in VX is not pressed (usually the next instruction is a jump to skip a code block).[13]
         */
+       if (NN == 0x9E) { // EX9E - if key down
+        if (is_key_pressed(ctx.reg.V[X])) {
+            ctx.reg.PC += 2;
+        }
+    }
+    else if (NN == 0xA1) { // EXA1 - if key up
+        if (!is_key_pressed(ctx.reg.V[X])) {
+            ctx.reg.PC += 2;
+        }
+    }
     }
     break;
 
@@ -215,6 +291,44 @@ bool cpu_step() {
         FX55	MEM	reg_dump(Vx, &I)	Stores from V0 to VX (including VX) in memory, starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.[lower-alpha 4][13]
         FX65	MEM	reg_load(Vx, &I)	Fills from V0 to VX (including VX) with values from memory, starting at address I. The offset from I is increased by 1 for each value read, but I itself is left unmodified.[lower-alpha 4][13]
         */
+       switch (NN) {
+        case 0x07: // FX07 - read  delay timer
+            ctx.reg.V[X] = delay_timer;
+            break;
+        case 0x0A: // FX0A - wait for input
+            ctx.reg.V[X] = wait_for_key();
+            break;
+        case 0x15: // FX15 - set delay timer
+            delay_timer = ctx.reg.V[X];
+            break;
+        case 0x18: // FX18 - set sound timer
+            sound_timer = ctx.reg.V[X];
+            break;
+        case 0x1E: // FX1E - I += VX
+            ctx.reg.I += ctx.reg.V[X];
+            break;
+        case 0x29: // FX29 - set font address
+            ctx.reg.I = FONT_ADDRESS + (ctx.reg.V[X] * 5);
+            break;
+        case 0x33: 
+            /*FX33 - BCD（"Binary-Coded Decimal）转换 
+            数字格式转换工具 将一个8位二进制数转换为3个BCD数字并存储到内存中 
+            让CHIP-8能够显示十进制数字*/
+            mem_write(ctx.reg.I, ctx.reg.V[X] / 100);
+            mem_write(ctx.reg.I + 1, (ctx.reg.V[X] / 10) % 10);
+            mem_write(ctx.reg.I + 2, ctx.reg.V[X] % 10);
+            break;
+        case 0x55: // FX55 - save from register to ram
+            for (int i = 0; i <= X; i++) {
+                mem_write(ctx.reg.I + i, ctx.reg.V[i]);
+            }
+            break;
+        case 0x65: // FX65 - load from ram to register
+            for (int i = 0; i <= X; i++) {
+                ctx.reg.V[i] = mem_read(ctx.reg.I + i);
+            }
+            break;
+        }
     }
     break;
     }
